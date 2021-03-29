@@ -35,4 +35,12 @@ app.get('/', (req,res) => {
     res.render('index');
 })
 
+app.get('/add-user', (req,res) => {
+    res.render('adduser');
+})
+
+app.get('/updateuser', (req,res) => {
+    res.render('updateuser');
+})
+
 app.listen(PORT, () => (console.log(`Server is running on http://localhost:${PORT}`)))
