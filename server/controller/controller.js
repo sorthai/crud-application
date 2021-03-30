@@ -39,12 +39,10 @@ exports.find = (req, res) => {
       res.send(user);
     })
     .catch((err) => {
-      res
-        .status(500)
-        .send({
-          message:
-            err.message || "Error occurred while retriving user information",
-        });
+      res.status(500).send({
+        message:
+          err.message || "Error occurred while retriving user information",
+      });
     });
 };
 
@@ -58,11 +56,9 @@ exports.update = (req, res) => {
   Userdb.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
     .then((data) => {
       if (!data) {
-        res
-          .status(400)
-          .send({
-            message: `Cannot Update user with ${id}.Maybe user not found`,
-          });
+        res.status(400).send({
+          message: `Cannot Update user with ${id}.Maybe user not found`,
+        });
       } else {
         res.send(data);
       }
@@ -73,4 +69,24 @@ exports.update = (req, res) => {
 };
 
 // delete a user with specified user id in the request
-exports.delete = (req, res) => {};
+exports.delete = (req, res) => {
+  const id = req.params.id;
+
+  Userdb.findByIdAndDelete(id)
+    .then((data) => {
+      if (!data) {
+        res
+          .status(404)
+          .send({ message: `Cannot delete with id ${id}. May be ID is wrong` });
+      } else {
+        res.send({
+          message: `User was deleted successfully!`,
+        });
+      }
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: `Cannot delete user with id =` + id,
+      });
+    });
+};
