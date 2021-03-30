@@ -65,7 +65,7 @@ exports.find = (req, res) => {
 // update a new identified user by user id
 exports.update = (req, res) => {
   if (!req.body) {
-    return res.status(400).send({ messaage: "Data to update cannot be empty" });
+    return res.status(400).send({ message: "Data to update cannot be empty" });
   }
 
   const id = req.params.id;
