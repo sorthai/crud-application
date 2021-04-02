@@ -1,21 +1,29 @@
 const axios = require('axios');
 
-exports.homeRoutes = (req, res) => {
 
-    // Make a GET request to /api/users
+exports.homeRoutes = (req, res) => {
+    // Make a get request to /api/users
     axios.get('http://localhost:8000/api/users')
-    .then(function(response){
-        res.render('index',{users: response.data});
-    })
-    .catch(err => {
-        res.send(err)
-    })
+        .then(function(response){
+            res.render('index', { users : response.data });
+        })
+        .catch(err =>{
+            res.send(err);
+        })
+
+    
 }
 
-exports.add_user = (req, res) => {
+exports.add_user = (req, res) =>{
     res.render('adduser');
 }
 
-exports.update_user = (req, res) => {
-    res.render('updateuser');
+exports.update_user = (req, res) =>{
+    axios.get('http://localhost:8000/api/users', { params : { id : req.query.id }})
+        .then(function(userdata){
+            res.render("updateuser", { user : userdata.data})
+        })
+        .catch(err =>{
+            res.send(err);
+        })
 }
